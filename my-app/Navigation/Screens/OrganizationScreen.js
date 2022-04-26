@@ -48,15 +48,45 @@ import ClubDetail from '../../components/ClubDetail';
 
 function OrganizationScreen({navigation})
 {
-    const [filter, setFilter] = useState([]);
-    const [orgData, setOrgData] = useState([]);
-
     const orgs = [
         {key: '0', title: "A Novel Idea", desc: "The purpose of A Novel Idea is to encourage reading for fun in order to instill a lifelong love of reading across the disciplines, as well as in the community. This club will give UNC students the chance to foster . . . " },
         {key: '1', title: "Academic Advising",  desc: "Our mission is to create a supportive environment in which we partner with undergraduates as they explore personal goals, develop educational plans, and thrive at Carolina. " },
         {key: '2', title: "Academic Team at UNC-CH",  desc: "A buzzer-based competition that tests knowledge of a variety of different academic subjects in a competitive, team-based enviroment. Think Jeopardy. But academic, and with teams. And rivalries . . ." },
         {key: '3', title: "Ackland Art Museum", desc: "The Ackland Art Museum, located on S. Columbia Street near Franklin St., features a permanent collection of over 19,000 works of art. Rotating special exhibitions feature a wide range of art . . ." }
     ];
+
+    const [filter, setFilter] = useState([]);
+    const [orgData, setOrgData] = useState(orgs);
+    const [searchData, setsearchData] = useState('');
+
+    const searchFilter = (text) => {
+        setOrgData(orgs);
+        setFilter(orgs);
+        console.log(text + " this is text");
+        setsearchData(text);
+        console.log(searchData + " this is search data");
+
+        const tempOrg = [];
+
+        for (var i = 0; i < orgs.length; i++){
+            if (orgs[i].title.toLowerCase().includes(text.toLowerCase())){
+                tempOrg.push(orgs[i]);
+            }
+        }
+
+        for (var i = 0; i < tempOrg.length; i++){
+            console.log("tempOrg: " + tempOrg[i].title);
+        }
+
+        setOrgData(tempOrg);
+
+        if (text == ''){
+            setOrgData(orgs);
+        }
+
+            
+
+    }
     return(
         <View style={styles.app}>
 
@@ -64,9 +94,9 @@ function OrganizationScreen({navigation})
                 onPress={() => navigation.navigate('Home')}
                 style={txt_style.app}>Organization Screen
             </Text>
-            <TextInput style={styles.textInputStyle} value="Search Org"/>
+            <TextInput style={styles.textInputStyle} value={searchData} placeholder="Search" onChangeText={(text) => searchFilter(text)}/>
             <FlatList 
-                data={orgs}
+                data={orgData}
                 renderItem={({ item }) => {
                     return <ClubDetail title = {item.title} desc = {item.desc}/>
                 }
