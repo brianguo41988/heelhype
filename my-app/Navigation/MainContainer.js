@@ -47,7 +47,7 @@ function MainContainer(){
                 tabBarActiveBackgroundColor: '#73AFD7',
                 tabBarInactiveBackgroundColor: '#73AFD7',
                 tabBarLabelStyle: { fontFamily: 'AppleSDGothicNeo-Regular'},
-                headerTitleStyle: {fontFamily: 'AppleSDGothicNeo-Regular', color: 'white'},
+                headerTitleStyle: {fontFamily: 'Noteworthy-Bold', color: 'white', fontSize: 24},
                 headerTitle: "Heel Hype",
                 headerStyle: {backgroundColor: '#73AFD7'}
             })}>
