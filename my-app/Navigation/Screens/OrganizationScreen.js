@@ -55,27 +55,18 @@ function OrganizationScreen({navigation})
         {key: '3', title: "Ackland Art Museum", desc: "The Ackland Art Museum, located on S. Columbia Street near Franklin St., features a permanent collection of over 19,000 works of art. Rotating special exhibitions feature a wide range of art . . ." }
     ];
 
-    const [filter, setFilter] = useState([]);
     const [orgData, setOrgData] = useState(orgs);
     const [searchData, setsearchData] = useState('');
 
     const searchFilter = (text) => {
         setOrgData(orgs);
-        setFilter(orgs);
-        console.log(text + " this is text");
         setsearchData(text);
-        console.log(searchData + " this is search data");
-
         const tempOrg = [];
 
         for (var i = 0; i < orgs.length; i++){
             if (orgs[i].title.toLowerCase().includes(text.toLowerCase())){
                 tempOrg.push(orgs[i]);
             }
-        }
-
-        for (var i = 0; i < tempOrg.length; i++){
-            console.log("tempOrg: " + tempOrg[i].title);
         }
 
         setOrgData(tempOrg);
