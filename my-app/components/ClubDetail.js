@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Button } from 'react-native';
 
 const ClubDetail = (props) => {
     return (
@@ -8,6 +8,7 @@ const ClubDetail = (props) => {
                 <View style = {styles.card}>
                     <Text style = {styles.cTitle}>{props.title}</Text>
                     <Text style = {styles.cDes}>Description: {props.desc}</Text>
+                    <Button title ="More" onPress={() => { props.morePressed();}}></Button>
                 </View>
                 <View style = {styles.space}/>
             </View>

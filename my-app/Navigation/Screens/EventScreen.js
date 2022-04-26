@@ -3,20 +3,45 @@ import {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView, FlatList, TextInput, Picker} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import EventDetail from '../../components/EventDetail';
+import EventCard from '../../components/EventCard';
 
 function EventScreen({navigation})
 {
     const orgs = [
-        {key: '0', title: "General Meeting", time:"7PM - 8PM Virtual", RSVPInfo: "None", RSVP: false, tValue: 3,  tag: ["Academic", "Arts"], desc: "Public health leadership and student association" },
-        {key: '1', title: "Global Leadership Workshop", time:"12PM - 1PM Beard 200 & Karpen 102", RSVPInfo: "Required", RSVP: true, tValue: 0, tag: ["Academic"], desc: "Phi Lambda Sigma Global Engagement Organization" },
-        {key: '2', title: "Hha! Interest Meet & Greet", time:"6:30PM - 8:00PM 1119 SASB North (Upendo)", RSVPInfo: "None",  RSVP: false, tValue: 2, tag: ["Academic"], desc: "Public health leadership and student association" },
-        {key: '3', title: "Sit & Spill", time:"3:00PM - 4:30PM Manning 14", RSVPInfo: "Required", RSVP: true, tag: ["Arts"], tValue: 1, desc: "Hha!" }
+        {key: '0', title: "General Meeting", time:"7PM - 8PM Virtual", RSVPInfo: "None", RSVP: false, tValue: 3,  tag: ["Academic", "Arts"], org: "Public health leadership and student association", des: "dummyDes" },
+        {key: '1', title: "Global Leadership Workshop", time:"12PM - 1PM Beard 200 & Karpen 102", RSVPInfo: "Required", RSVP: true, tValue: 0, tag: ["Academic"], org: "Phi Lambda Sigma Global Engagement Organization", des: "dummyDes" },
+        {key: '2', title: "Hha! Interest Meet & Greet", time:"6:30PM - 8:00PM 1119 SASB North (Upendo)", RSVPInfo: "None",  RSVP: false, tValue: 2, tag: ["Academic"], org: "Public health leadership and student association", des: "dummyDes" },
+        {key: '3', title: "Sit & Spill", time:"3:00PM - 4:30PM Manning 14", RSVPInfo: "Required", RSVP: true, tag: ["Arts"], tValue: 1, org: "Hha!", des:"dummyDes" }
     ];
+
+    const orgCard = [];
 
     const filter = ["None", "Alphabetical", "Chronological", "RSVP", "Non-RSVP"];
 
     const [orgData, setOrgData] = useState(orgs);
     const [searchData, setsearchData] = useState('');
+    const [orgCardData, setOrgCardData] = useState(orgCard);
+
+    const morePressed = (title) => {
+        const tempOrg = [];
+
+        for (var i = 0; i < orgs.length; i++){
+            if (orgs[i].title == title) {
+                tempOrg.push(orgs[i]);
+            }
+        }
+        setOrgData([]);
+        setOrgCardData(tempOrg);
+    }
+
+    const backPressed = () => {
+        setOrgData(orgs);
+        setOrgCardData([]);
+    }
+
+    const calendarPressed = () => {
+        alert("Added to Calander");
+    }
 
     const searchFilter = (text) => {
         setOrgData(orgs);
@@ -70,7 +95,6 @@ function EventScreen({navigation})
     }
     return(
         <View style={styles.app}>
-
             <Text
                 onPress={() => navigation.navigate('Home')}
                 style={txt_style.app}>Events Screen
@@ -92,12 +116,21 @@ function EventScreen({navigation})
                     return item
                 }}
             />
+
+            <FlatList 
+                data={orgCardData}
+                renderItem={({ item }) => {
+                    return <EventCard title = {item.title} org = {item.org} time = {item.time} des = {item.des} RSVPInfo = {item.RSVPInfo} backPressed={() => backPressed()} calendarPressed={() => calendarPressed()}/>
+                }
+                }/>
+
             <FlatList 
                 data={orgData}
                 renderItem={({ item }) => {
-                    return <EventDetail title = {item.title} desc = {item.desc} time = {item.time} RSVPInfo = {item.RSVPInfo}/>
+                    return <EventDetail title = {item.title} org = {item.org} time = {item.time} RSVPInfo = {item.RSVPInfo} morePressed={() => morePressed(item.title)}/>
                 }
                 }/>
+        
         </View>
     );
 }
