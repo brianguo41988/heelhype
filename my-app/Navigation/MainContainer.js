@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { HomeScreenNavigator } from './Screens/CustomNavigation';
 
 
 //Screens
@@ -52,7 +53,7 @@ function MainContainer(){
                 headerStyle: {backgroundColor: '#73AFD7'}
             })}>
             
-            <Tab.Screen name={homeName} component={HomeScreen}/>
+            <Tab.Screen name={homeName} component={HomeScreenNavigator}/>
             <Tab.Screen name={eventName} component={EventScreen}/>
             <Tab.Screen name={orgName} component={OrganizationScreen}/>
             <Tab.Screen name={profileName} component={ProfileScreen}/>

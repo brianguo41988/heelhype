@@ -1,29 +1,35 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Dimensions, Button} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Component } from 'react/cjs/react.production.min';
 import eventData from '../../Data/eventListData';
+import { useNavigation } from '@react-navigation/native';
 
+//Finds the window height and width for styling
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+//Populates the FlatList with Items (listings)
 class FlatListItem extends Component{
 
     render(){
-        return(
+        return( 
             <View style={style.mainContainer}>
-                    <View style={style.rows}>
-                        <Image
-                            source={{uri: this.props.item.img}}
-                            style={style.row_img}
-                        ></Image>
-                            <View style={style.column_txt}>
-                                <Text style={style.flastListItem_eName}>{this.props.item.title}</Text>
-                                <Text style={style.flastListItem}>{this.props.item.org}</Text>
-                                <Text style={style.flatListItem_sub}>{this.props.item.time}</Text>
-                                <Text style={style.flatListItem_sub}>{this.props.item.location}</Text>
-                            </View>
-                    </View>
+                    <TouchableOpacity onPress={()=>{
+                        this.props.navigation.navigate(screenSelector(this.props.item.title))}}>
+                        <View style={style.rows}>
+                            <Image
+                                source={{uri: this.props.item.img}}
+                                style={style.row_img}
+                            ></Image>
+                                <View style={style.column_txt}>
+                                    <Text style={style.flastListItem_eName}>{this.props.item.title}</Text>
+                                    <Text style={style.flastListItem}>{this.props.item.org}</Text>
+                                    <Text style={style.flatListItem_sub}>{this.props.item.time}</Text>
+                                    <Text style={style.flatListItem_sub}>{this.props.item.location}</Text>
+                                </View>
+                        </View>
+                    </TouchableOpacity>
                 <View style={{
                     height: 0,
                     backgroundColor: '#73AFD7',
@@ -34,10 +40,10 @@ class FlatListItem extends Component{
     }
 }
 
+//Creates the homeScreen
 function HomeScreen({navigation})
 {
     let tod_date = getCurrentDate();
-
     return(
         <View style={style.app}>
             <Text style={style.header}>{tod_date}</Text>
@@ -45,14 +51,30 @@ function HomeScreen({navigation})
                 data={eventData}
                 renderItem={({item, index}) => {
                     return (
-                        <FlatListItem item={item} index={index}></FlatListItem>
+                        <FlatListItem navigation={navigation} item={item} index={index}></FlatListItem>
                     );
                 }}
-            >
+                >
             </FlatList>
         </View>
         
     );
+}
+
+//Returns the name of the selected screen based on item.title value
+function screenSelector(title){
+    let e = title.toString().substring(0,3).toLowerCase();
+    if(e === 'lun') {return 'LunchScreen';}
+    else if(e === 'tie') {return 'TieScreen';}
+    else if(e === 'spi') {return 'SpikeScreen';}
+    else if(e === 'bat') {return 'BattleScreen';}
+    else if(e === 'sha') {return 'ShabScreen';}
+    else if(e === 'hum') {return 'HumanScreen';}
+    else if(e === 'xal') {return 'XalScreen';}
+    else if(e === 'ful') {return 'FullMoonScreen';}
+    else if(e === 'car') {return 'MentalScreen';}
+    else if(e === 'mov') {return 'MovieScreen';}
+
 }
 
 
