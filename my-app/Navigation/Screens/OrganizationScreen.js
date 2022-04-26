@@ -12,7 +12,7 @@ function OrganizationScreen({navigation})
         {key: '2', title: "Academic Team at UNC-CH", tag: ["Academic"], desc: "A buzzer-based competition that tests knowledge of a variety of different academic subjects in a competitive, team-based enviroment. Think Jeopardy. But academic, and with teams. And rivalries . . ." },
         {key: '3', title: "Ackland Art Museum", tag: ["Arts"], desc: "The Ackland Art Museum, located on S. Columbia Street near Franklin St., features a permanent collection of over 19,000 works of art. Rotating special exhibitions feature a wide range of art . . ." }
     ];
-    const filter = ["Academic", "Arts", "Others", "Sports"];
+    const filter = ["None", "Academic", "Arts", "Others", "Sports"];
 
     const [orgData, setOrgData] = useState(orgs);
     const [searchData, setsearchData] = useState('');
@@ -38,15 +38,19 @@ function OrganizationScreen({navigation})
     const selectedFilter = (selectedItem) => {
         console.log(selectedItem);
         const tempOrg = [];
-        for (var i = 0; i < orgs.length; i++){
-            for (var j = 0; j < orgs[i].tag.length; j++){
-                if (orgs[i].tag[j] == selectedItem){
-                    console.log(orgs[i].title);
-                    tempOrg.push(orgs[i]);
+        if (selectedItem != "None"){
+            for (var i = 0; i < orgs.length; i++){
+                for (var j = 0; j < orgs[i].tag.length; j++){
+                    if (orgs[i].tag[j] == selectedItem){
+                        console.log(orgs[i].title);
+                        tempOrg.push(orgs[i]);
+                    }
                 }
             }
+            setOrgData(tempOrg);
+        } else {
+            setOrgData(orgs);
         }
-        setOrgData(tempOrg);
 
     }
     return(
@@ -92,12 +96,12 @@ const styles = StyleSheet.create({
         textShadowColor: 'white'
     },
     textInputStyle: {
-        height: 30,
-        width: 150,
+        height: 50,
+        width: 400,
         borderWidth: 1,
         paddingLeft: 5,
         margin: 5,
-        borderColor: '#009688',
+        borderColor: '#ADDBE6',
         backgroundColor: 'white'
 
     }
