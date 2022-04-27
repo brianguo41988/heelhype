@@ -7,9 +7,10 @@ const EventDetail = (props) => {
                 <View style = {[styles.space, {height:10}]}/>
                 <View style = {styles.card}>
                     <Text style = {styles.cTitle}>{props.title}</Text>
-                    <Text style = {styles.cDes}>{props.org}</Text>
+                    <Text style = {styles.cDes}>Time: {props.time}</Text>
+                    <Text style = {styles.cDes}>Location: {props.location}</Text>
+                    <Text style = {styles.cDes}>Host: {props.org}</Text>
                     <Text style = {styles.cDes}>RSVP: {props.RSVPInfo}</Text>
-                    <Text style = {styles.cDes}>{props.time}</Text>
                     <Button title ="More" onPress={() => { props.morePressed();}}></Button>
                 </View>
                 <View style = {styles.space}/>
@@ -20,14 +21,14 @@ const EventDetail = (props) => {
 const styles = StyleSheet.create({
     container: { flex: 1, width: 410 },
     space: { borderBottomColor: 'black', borderBottomWidth: 1},
-    card: { backgroundColor: '#ADDBE6', height: 170, padding: 10},
+    card: { backgroundColor: '#ADDBE6', height: 230, padding: 10},
     cTitle: {
         color: "black",
         fontSize: 26,
         fontWeight: 'bold',
         fontFamily: 'AppleSDGothicNeo-Regular'
     },
-    cDes: { fontStyle: 'italic', padding: 5,}
+    cDes: { fontStyle: 'italic', padding: 5, fontWeight: 'bold'}
 });
 
 export default EventDetail;
